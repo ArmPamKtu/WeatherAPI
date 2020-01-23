@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import CityData from '../city_data/city.list.json';
-import Chart from './chart/chart';
-import CitySearch from './citySearch/citySearch';
-
+import CityData from '../../city_data/city.list.json';
+import Chart from '../chart/chart';
+import CitySearch from '../citySearch/citySearch';
+import CountrySelection from '../countrySelection/countrySelection';
+import CoordinateSelection from '../coordinateSelection/coordinateSelection';
+import ForecastSearch from '../forecastSearch/forecastSearch';
 import './App.scss';
 
 const App = () => {
@@ -26,7 +28,6 @@ const App = () => {
     },
     data: [{
       type: "line",
-      xValueFormatString: "MMM YYYY",
       yValueFormatString: "#,##0.00°C",
       dataPoints: mappedcity
           }]
@@ -42,7 +43,7 @@ const App = () => {
     return time;
   }
 
-  const searchPhotos = (city : string ) => {
+  const forecastSearch = (city : string ) => {
 
     const cityObject =  CityData.cities.filter( function(item : any) {
       return item.name.toLowerCase() === city.toLowerCase() && item.country === country && item.coord.lat == GPS; 
@@ -111,41 +112,12 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className="content">
      
       < CitySearch city={city} checkCity={CheckCity}/>
-
-      {
-        countries.length >= 1  ?
-          <select id="countrySelection" onChange={() => SelectCountry()}>
-            { countries.map( (item : string) => {
-              return (
-                <option key={item} value={item} > {item}</option>
-              );
-            })}
-          </select>
-          :
-          <></>
-      }
-
-
-      {
-        country !== "" ?
-        <select id="citySelection" onChange={() => SelectCity()}>
-          { cities.map( (item : any) => {
-            if(item.country === country) {
-              return (
-                <option key={item.coord.lat} value={item.coord.lat} > {item.coord.lat} {item.coord.lon}</option>
-              );
-            }
-          })}
-        </select>
-        :
-        <></>
-      }
-
-      <button onClick={() => searchPhotos(city)}>Search</button>
-
+      < CountrySelection countries={countries} selectCountry={SelectCountry} />
+      < CoordinateSelection country={country} SelectCity={SelectCity} cities={cities}/>
+      < ForecastSearch  country={country} gps={GPS} city={city} forecastSearch={forecastSearch} />
       < Chart data={options} />
     </div>
   );

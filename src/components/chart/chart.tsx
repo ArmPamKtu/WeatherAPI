@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import CanvasJSReact from '../../chart_library/canvasjs.react';
 import './chart.scss';
 
-var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 
