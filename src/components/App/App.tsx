@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CityData from '../../city_data/city.list.json';
 import Chart from '../chart/chart';
 import CitySearch from '../citySearch/citySearch';
@@ -15,6 +15,7 @@ const App = () => {
   const [country, setCountry] = useState("");
   const [mappedcity, setMappedcity] = useState([]);
   const [GPS, setGPS] = useState("");
+  const [searched, setSearched] = useState(false);
 
   const options = {
     theme: "light2",
@@ -31,9 +32,9 @@ const App = () => {
       yValueFormatString: "#,##0.00°C",
       dataPoints: mappedcity
           }]
-  }
+    }
 
-  function timeConverter(UNIX_timestamp : number){
+  function timeConverter( UNIX_timestamp : number ){
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var month = months[a.getMonth()];
@@ -49,24 +50,27 @@ const App = () => {
       return item.name.toLowerCase() === city.toLowerCase() && item.country === country && item.coord.lat == GPS; 
     });
 
-    let clientId = '17873119ee37179ff12211c26a3d3d31';
-    let url = 
-    "https://api.openweathermap.org/data/2.5/forecast?id=" + 
-    cityObject[0].id + '&units=metric&appid=' + clientId;
-    
-    fetch(url)
-      .then(function (data) {
-        return data.json();
-      })
-      .then(function (data) {
-        const mappedcity = data.list.map( (time : any) => {
-            return {
-              y: time.main.temp,
-              label: timeConverter(time.dt)
-            }
-        });
-        setMappedcity(mappedcity);
-      })
+    if(cityObject.length !== 0) {
+      setSearched(true);
+      let clientId = '17873119ee37179ff12211c26a3d3d31';
+      let url = 
+      "https://api.openweathermap.org/data/2.5/forecast?id=" + 
+      cityObject[0].id + '&units=metric&appid=' + clientId;
+      
+      fetch(url)
+        .then(function (data) {
+          return data.json();
+        })
+        .then(function (data) {
+          const mappedcity = data.list.map( (time : any) => {
+              return {
+                y: time.main.temp,
+                label: timeConverter(time.dt)
+              }
+          });
+          setMappedcity(mappedcity);
+        })
+    }
   }
 
   const CheckCity = ( city : string) => {
@@ -113,12 +117,19 @@ const App = () => {
 
   return (
     <div className="content">
-     
-      < CitySearch city={city} checkCity={CheckCity}/>
-      < CountrySelection countries={countries} selectCountry={SelectCountry} />
-      < CoordinateSelection country={country} SelectCity={SelectCity} cities={cities}/>
-      < ForecastSearch  country={country} gps={GPS} city={city} forecastSearch={forecastSearch} />
-      < Chart data={options} />
+      <div className="content__seach-elements">
+        < CitySearch city={city} checkCity={CheckCity}/>
+        < CountrySelection countries={countries} selectCountry={SelectCountry} />
+        < CoordinateSelection country={country} SelectCity={SelectCity} cities={cities}/>
+        < ForecastSearch  country={country} gps={GPS} city={city} forecastSearch={forecastSearch} />
+      </div>
+      
+      {
+        searched ?
+        < Chart data={options} />
+        :
+        <></>
+      }
     </div>
   );
 }

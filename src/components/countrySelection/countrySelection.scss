@@ -1,0 +1,23 @@
+.country-selection {
+    margin: 20px;
+    flex: 0 30%;
+
+    &__text {
+        font-family: "Raleway",sans-serif;
+        font-size: 1rem;
+        margin: 10px 0;
+    }
+
+    &__dropdown {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+        padding: 10px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .country-selection {
+        flex: 0 40%;
+    }
+}

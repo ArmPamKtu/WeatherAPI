@@ -9,11 +9,10 @@ interface ICoordinateSelection {
 
 const CoordinateSelection = (props : ICoordinateSelection) => {
     return (
-
-        <div>
-            <p></p>
-            { props.country !== "" ?
-                <select className="data-selection"
+        props.country !== "" ?
+            <div className="coordinate-selection">
+                <p className="coordinate-selection__text">Select the coordinates of the city</p>
+                <select className="coordinate-selection__dropdown"
                     id="citySelection" onChange={() => props.SelectCity()}>
                 { props.cities.map( (item : any) => {
                     if(item.country === props.country) {
@@ -23,10 +22,10 @@ const CoordinateSelection = (props : ICoordinateSelection) => {
                     }
                 })}
                 </select>
-                :
-                <></>
-            }
-        </div>
+            </div>
+            :
+            <></>
+            
     )
 }
 

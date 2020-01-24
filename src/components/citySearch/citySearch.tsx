@@ -8,9 +8,12 @@ interface ICitySearch {
 
 const CitySearch = (props : ICitySearch) => {
     return (
-        <div>
-            <p className="search__text">Write the city you wanna see the forecast for</p>
-            <input type="text" value={props.city} onChange={(e) => props.checkCity(e.target.value)}/>
+        <div className="city-search">
+            <p className="city-search__text">Write the city you want to see the forecast for:</p>
+            <input 
+                className="city-search__input" type="text" 
+                value={props.city} 
+                onChange={(e) => props.checkCity(e.target.value)}/>
         </div>
     )
 }

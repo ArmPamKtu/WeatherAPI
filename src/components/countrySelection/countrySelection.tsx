@@ -9,16 +9,20 @@ interface ICountrySelection {
 const CountrySelection = (props : ICountrySelection) => {
     return (
         props.countries.length >= 1  ?
-            <div>
-                <p className="search__text">Select country code</p>
-                <select id="countrySelection" onChange={() => props.selectCountry()}>
-                {
-                    props.countries.map( (item : string) => {
-                        return (
-                            <option key={item} value={item} > {item}</option>
-                        );
-                    })
-                }
+            <div className="country-selection">
+                <p className="country-selection__text">Select wanted countries code</p>
+                <select 
+                    className="country-selection__dropdown"
+                    id="countrySelection" 
+                    onChange={() => props.selectCountry()}
+                >
+                    {
+                        props.countries.map( (item : string) => {
+                            return (
+                                <option key={item} value={item} > {item}</option>
+                            );
+                        })
+                    }
                 </select>
             </div>
             :

@@ -1,10 +1,23 @@
-.search {
+.city-search {
 
+    margin: 20px;
+    flex: 0 25%;
 
     &__text {
         font-family: "Raleway",sans-serif;
         font-size: 1rem;
-        margin: 10px;
+        margin: 10px 0;
     }
 
+    &__input {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .city-search {
+        flex: 0 40%;
+    }
 }

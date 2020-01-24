@@ -1,4 +1,10 @@
 .content {
   max-width: 80%;
-  margin: auto;
+  margin: 70px auto;
+
+  &__seach-elements {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 40px 0 20px;
+  }
 }

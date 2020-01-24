@@ -12,7 +12,12 @@ const ForecastSearch = (props : IForecastSearch) => {
     return (
 
         props.country !== "" && props.gps !== "" && props.city !== "" ?
-            <button onClick={() => props.forecastSearch(props.city)}>Search</button> 
+            <div className="forecast-search">
+                <button
+                className="forecast-search__input"
+                onClick={() => props.forecastSearch(props.city)}
+                >Search</button> 
+            </div>
             :
              <> </>
            
